@@ -1,165 +1,311 @@
-console.log('Sample JavaScript HW#1');
+console.log('Sample JavaScript #2 HW #16');
 
 /*
  * #1
  *
- * Создайте переменные со значениями
+ * Создайте объект userObj, описывающий человека.
+ *
+ * Следующие поля обязательны:
+ * firstName – любое имя, строка
+ * lastName – любая фамилия, строка
+ * age – любой возраст, число
  */
 
-// имя переменной: myNum, значение: 10
+var userObj = {
+    firstName: 'First',
+    lastName: 'Last',
+    age: 25,
+    fullName() {
+        return userObj.firstName + ' ' + userObj.lastName;
+    }
+}
 
-var myNum = 10;
-console.log(myNum);
-
-// имя переменной: myStr, значение: 'строка'
-
-var myStr = 'строка';
-console.log(myStr);
-
-// имя переменной: myBool, значение: true
-
-var myBool = true;
-console.log(myBool);
-
-// имя переменной: myArr, значения: 1, 2, 3, 4, 5
-
-var myArr = [1, 2, 3, 4, 5];
-console.log(myArr);
-
-// имя переменной myObj, значения: first: 'First Name', last: 'Last Name'
-
-var myObj = {
-    first: "First Name",
-    last: "Last Name"
-};
-console.log(myObj);
+console.log(userObj);
 
 /*
  * #2
  *
- * Отформатируйте целое число, которое хранится в переменной myNum,
- * чтобы получить результат с 2 знаками после запятой.
- * Результат сохраните в переменную decimal2.
+ * Для объекта из п.1 создайте метод fullName, который будет возвращать полное имя,
+ * состоящее из firstName и lastName, склеенных в строку через пробел.
+ *
+ * Например:
+ * userObj.firstName ← 'Имя
+ * userObj.lastName ← Фамилия'
+ * userObj.fullName() → 'Имя Фамилия'.
  */
 
-var decimal2 = myNum.toFixed(2);
+console.log(userObj.fullName());
 
 /*
  * #3
  *
- * Создайте переменную i для которой выполните префиксный
- * и постфиксный инкремент и декремент.
- * Поэкспериментируйте с результатами, выводя их в консоль.
+ * Дана функция defUpperStr('My text'), которая возвращает текст, преобразованный в верхний регистр, т.е:
+ * defUpperStr('My text') → 'MY TEXT'.
+ *
+ * Если функция вызывается без параметра defUpperStr(), она не должна возвращать undefined,
+ * в этом случае требуется вернуть строку текста по умолчанию в верхнем регистре, т.е:
+ * defUpperStr() → 'DEFAULT TEXT'.
+ *
+ * При выполнении задачи не используйте оператор if, требуется решение с логическим оператором ||.
  */
 
-var i = 10;
+/* eslint-disable capitalized-comments */
 
-console.log(i);
+function defUpperStr(str) {
+    return (str || 'Default text').toUpperCase();
+}
 
-console.log(i++);
-console.log(i);
+console.log(defUpperStr('My text')); // MY TEXT
 
-console.log(i--);
-console.log(i);
-
-console.log(++i);
-console.log(i);
-
-console.log(--i);
-console.log(i);
+console.log(defUpperStr()); // DEFAULT TEXT
 
 /*
  * #4
  *
- * Создайте новую переменную myTest и присвойте ей значение 20.
- * Выполните присваивание с операцией, используя операторы: +=, –=, *=, /=, %=.
- * Результаты присваиваются в myTest, затем выводятся в консоль.
- * В вычислениях можно использовать объявленную ранее переменную myNum и/или числа.
+ * Создайте функцию evenFn(n), которая принимает параметром число – количество итераций цикла,
+ * т.е. for 0..n. Функция должна вернуть массив, состоящий только из четных значений, генерируемых в цикле.
+ *
+ * Причем:
+ * 0 не должен попадать в результирующий массив
+ * цикл должен работать до n включительно
+ * разрешен только оператор for
+ *
+ * Например:
+ * evenFn(10) → [2, 4, 6, 8, 10]
+ * evenFn(15) → [2, 4, 6, 8, 10, 12, 14]
+ * evenFn(20) → [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
  */
 
-var myTest = 20;
+function evenFn(n) {
 
-myTest += 10;
-console.log(myTest);
+    var array = [];
+  
+    for (var i = 1; i <= n; i++) {
+        if (i % 2 === 0) {
+            array.push(i);
+        }
+    }
 
-myTest -= 10;
-console.log(myTest);
+    return array;
+}
 
-myTest *= 10;
-console.log(myTest);
+console.log(evenFn(10)); // [2, 4, 6, 8, 10]
 
-myTest /= 10;
-console.log(myTest);
+console.log(evenFn(15)); // [2, 4, 6, 8, 10, 12, 14]
 
-myTest %= 10;
-console.log(myTest);
+console.log(evenFn(20)); // [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
 
 /*
  * #5
  *
- * Используя свойства и методы объекта Math, присвойте переменным и отобразите в консоли
+ * Создайте функцию weekFn(n), которая принимает номер дня недели, а возвращает его название.
+ * Если вводится строка, любое дробное число или число вне диапазона 1..7 – функция должна вернуть null.
+ *
+ * Например:
+ * 1 → 'Понедельник'
+ * 2 → 'Вторник'
+ * ...
+ * 7 → 'Воскресенье'
+ *
+ * В реализации функции обязательно должны быть использованы операторы switch / case / default.
  */
 
-// константа Pi → myPi
-var myPi = Math.PI;
-console.log(myPi);
+function weekFn(n) {
 
-// округленное значение числа 89.279 → myRound
-var myRound = Math.round(89.279);
-console.log(myRound);
+    var message = '';
+  
+    switch (n) {
+      case 1:
+        message = 'Понедельник';
+        break;
+      case 2:
+        message = 'Вторник';
+        break;
+      case 3:
+        message = 'Среда';
+        break;
+      case 4:
+        message = 'Четверг';
+        break;
+      case 5:
+        message = 'Пятница';
+        break;
+      case 6:
+        message = 'Суббота';
+        break;
+      case 7:
+        message = 'Воскресенье';
+        break;
+      default:
+        message = null;
+    }
+  
+    return message;
+}
+  
+console.log(weekFn(1)); // 'Понедельник'
 
-// случайное число между 0..10 → myRandom
-var myRandom = Math.random() * 10;
-console.log(myRandom);
+console.log(weekFn(3)); // 'Среда'
 
-// 3 в 5 степени → myPow
-var myPow = Math.pow(3, 5);
-console.log(myPow);
+console.log(weekFn(7)); // 'Воскресенье'
+
+console.log(weekFn(9)); // null
+
+console.log(weekFn(1.5)); // null
+
+console.log(weekFn('2')); // null
 
 /*
  * #6
  *
- * Создайте объект с именем strObj.
- * Присвойте ключу str строку текста "Мама мыла раму, рама мыла маму", ключу length установите длину этой строки.
+ * создайте функцию ageClassification(n), которая будет в качестве параметра принимать любые числа
+ * и возвращать строку согласно следующим условиям, n:
+ *           менее 0 – null
+ *             0..24 – 'детский возраст'
+ *           24+..44 – 'молодой возраст'
+ *           44+..65 – 'средний возраст'
+ *           65+..75 – 'пожилой возраст'
+ *           75+..90 – 'старческий возраст'
+ *          90+..122 – 'долгожители'
+ *         более 122 – null
+ *
+ * При выполнении задания допускается использовать только тернарный оператор ?.
+ * Использование операторов if, switch – запрещено.
  */
 
-var strObj = {str: 'Мама мыла раму, рама мыла маму'};
+function ageClassification(n) {
+    return n > 0 ? n > 24 ? n > 44 ? n > 65 ? n > 75 ? n > 90 ? n > 122 ? null : 'долгожители' : 'старческий возраст' : 'пожилой возраст' : 'средний возраст' : 'молодой возраст' : 'детский возраст' : null;
+}
 
-strObj.length = strObj.str.length;
-console.log(strObj);
+console.log('-1 :', ageClassification(-1)); // -1 : null
+
+console.log('5 :', ageClassification(5)); // 5 : детский возраст
+
+console.log('34 :', ageClassification(34)); // 34 : молодой возраст
+
+console.log('50 :', ageClassification(50)); // 50 : средний возраст
+
+console.log('65.1 :', ageClassification(65.1)); // 65.1 : пожилой возраст
+
+console.log('80 :', ageClassification(80)); // 80 : старческий возраст
+
+console.log('110 :', ageClassification(110)); // 110 : долгожители
+
+console.log('130 :', ageClassification(130)); // 130 : null
+
+/*
+ * Блок тестирования:
+ * console.log(1, ageClassification(-1) === null);
+ * console.log(2, ageClassification(1) === 'детский возраст');
+ * console.log(3, ageClassification(24) === 'детский возраст');
+ * console.log(4, ageClassification(24.01) === 'молодой возраст');
+ * console.log(5, ageClassification(44) === 'молодой возраст');
+ * console.log(6, ageClassification(44.01) === 'средний возраст');
+ * console.log(7, ageClassification(65) === 'средний возраст');
+ * console.log(8, ageClassification(65.01) === 'пожилой возраст');
+ * console.log(9, ageClassification(75) === 'пожилой возраст');
+ * console.log(10, ageClassification(75.01) === 'старческий возраст');
+ * console.log(11, ageClassification(90) === 'старческий возраст');
+ * console.log(12, ageClassification(90.01) === 'долгожители');
+ * console.log(13, ageClassification(122) === 'долгожители');
+ * console.log(14, ageClassification(122.01) === null);
+ * console.log(15, ageClassification(150) === null);
+ */
 
 /*
  * #7
  *
- * Проверьте наличие текста 'рама' в поле str объекта strObj (см.п.6),
- * результат сохраните в переменную isRamaPos и выведите ее в консоль.
+ * Создайте функцию oddFn(n), которая принимает параметром число – количество итераций цикла.
+ * Функция должна вернуть массив, состоящий только из нечетных значений, генерируемых в цикле.
+ *
+ * Причем:
+ * 0 не должен попадать в результирующий массив
+ * цикл должен работать до n включительно
+ * разрешен только оператор while
+ *
+ * Например:
+ * oddFn(10) → [1, 3, 5, 7, 9]
+ * oddFn(15) → [1, 3, 5, 7, 9, 11, 13, 15]
+ * oddFn(20) → [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
  */
 
-var isRamaPos = strObj.str.indexOf('рама');
+function oddFn(n) {
+    
+    var array = [];
+    var i = 0;
+  
+    while (i++ < n) {
+        if (i % 2 !== 0) {
+            array.push(i);
+        }
+    }
 
-console.log(isRamaPos);
+    return array;
+}
+
+console.log(oddFn(10)); // [1, 3, 5, 7, 9]
+
+console.log(oddFn(15)); // [1, 3, 5, 7, 9, 11, 13, 15]
+
+console.log(oddFn(20)); // [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
 
 /*
  * #8
  *
- * Выполните переименование подстроки в строке.
- * В качестве исходной строки используйте значение поля str объекта strObj (см.п.6), результат сохраните в переменную strReplace и отобразите в консоли.
- * Исходная строка: 'Мама мыла раму, рама мыла маму'
- *       Результат: 'Мама моет раму, Рама держит маму'
+ * Создайте основную функцию mainFunc(a, b, func), которая принимает три параметра:
+ * a – число
+ * b - число
+ * func –  обрабатывающая параметры a и b, возвратная (callback) функция
+ *
+ * Реализуйте проверку: если третьим параметром передается не функция, нужно вернуть false.
+ *
  */
 
-var strReplace = strObj.str.replace('мыла', 'моет')
-strReplace = strReplace.replace('рама', 'Рама');
-strReplace = strReplace.replace('мыла', 'держит');
-console.log(strReplace);
+function mainFunc(a, b, func) {
+    if (typeof func === 'function') { 
+        return func(a, b);
+    } 
+
+    return false;
+}
 
 /*
- * #9
- *
- * Преобразуйте любую строку в верхний, затем в нижний регистры, результат отобразите в консоли.
+ * реализуйте следующие функции, которые будут осуществлять механизм callback в основной функции,
+ * возвращая ей результат собственного вычисления...
+ * для возведения в степень и получения произвольного значения можете воспользоваться методами объекта Math.
  */
 
-var newStr = 'My name is Nazar!';
+// cbRandom(a, b) – вычисляет и возвращает произвольное целое число в диапазоне между a и b включительно.
 
-console.log(newStr.toUpperCase());
-console.log(newStr.toLowerCase());
+function cbRandom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// cbPow(a, b) – вычисляет и возвращает результат возведения числа a в степень b.
+
+function cbPow(a, b) {
+    return Math.pow(a, b);
+}
+
+// cbAdd(a, b) – вычисляет и возвращает сумму двух чисел a и b.
+
+function cbAdd(a, b) {
+    return a + b;
+}
+
+/*
+ * mainFunc() должна возвращать результат работы переданной ей возвратной функции, например:
+ * mainFunc(2, 5, cbRandom) → случайно от 2 до 5 включительно
+ * mainFunc(10, 30, cbRandom) → случайно 10..30 включительно
+ * mainFunc(2, 5, cbPow) → 32
+ * mainFunc(2, 5, cbAdd) → 7
+ * mainFunc(2, 5, 'not a func') → false
+ */
+
+console.log(mainFunc(2, 5, cbRandom)); // целые числа в диапазоне 2..5
+
+console.log(mainFunc(2, 5, cbPow)); // 32
+
+console.log(mainFunc(2, 5, cbAdd)); // 7
+
+console.log(mainFunc(2, 5, 'not a func')); // false
