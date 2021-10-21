@@ -1,6 +1,11 @@
 class Carousel {
 	constructor(parameter) {
-		const setting = this._initConfig(parameter);
+
+		// ! Код для работы с закоментированной функцией _initConfig(object)
+		//const setting = this._initConfig(parameter);
+
+		// ! Стабильное решение без дополнительной функции _initConfig(object)
+		const setting = { ...{ containerID: '#carousel', slideID: '.slide', interval: 5000, isPlaying: true, }, ...parameter };
 
 		this.container = document.querySelector(setting.containerID);
 		this.slides = this.container.querySelectorAll(setting.slideID);
@@ -9,23 +14,59 @@ class Carousel {
 		this.isPlaying = setting.isPlaying;
 	}
 
-	_initConfig(object) {
-		const defaultSetting = {
-			containerID: '#carousel',
-			slideID: '.slide',
-			interval: 5000,
-			isPlaying: true,
-		};
+	//	_initConfig(object) {
+	// ! Variant 4 Start
 
-		if (typeof object !== 'undefined') {
-			defaultSetting.containerID = object.containerID || defaultSetting.containerID;
-			defaultSetting.slideID = object.slideID || defaultSetting.slideID;
-			defaultSetting.interval = object.interval || defaultSetting.interval;
-			defaultSetting.isPlaying = object.isPlaying || defaultSetting.isPlaying;
-		}
+	//return { ...{ containerID: '#carousel', slideID: '.slide', interval: 5000, isPlaying: true, }, ...object };
 
-		return defaultSetting;
-	}
+	// ! Variant 4 End
+
+	// ! Variant 3 Start
+
+	//const defaultSetting = { containerID: '#carousel', slideID: '.slide', interval: 5000, isPlaying: true, };
+
+	//return { ...defaultSetting, ...object };
+
+	// ! Variant 3 End
+
+	// ! Variant 2 Start
+
+	//const defaultSetting = {
+	//	containerID: '#carousel',
+	//	slideID: '.slide',
+	//	interval: 5000,
+	//	isPlaying: true,
+	//};
+
+	// TODO: выбрать один из вариантов ниже с меткой '?'
+
+	// ? const newObject = Object.assign({}, object);
+	// ? const newObject = { ...defaultSetting, ...object };
+
+	//return newObject;
+
+	// ! Variant 2 End
+
+	// ! Variant 1 Start
+
+	//const defaultSetting = {
+	//	containerID: '#carousel',
+	//	slideID: '.slide',
+	//	interval: 5000,
+	//	isPlaying: true,
+	//};
+
+	//if (typeof object !== 'undefined') {
+	//	defaultSetting.containerID = object.containerID || defaultSetting.containerID;
+	//	defaultSetting.slideID = object.slideID || defaultSetting.slideID;
+	//	defaultSetting.interval = object.interval || defaultSetting.interval;
+	//	defaultSetting.isPlaying = object.isPlaying || defaultSetting.isPlaying;
+	//}
+
+	//return defaultSetting;
+
+	// ! Variant 1 End
+	//	}
 
 	_initProps() {
 		this.currentSlide = 0;
@@ -43,7 +84,10 @@ class Carousel {
 	_initControls() {
 		const controls = document.createElement('div');
 
-		const PAUSE = `<span class="control control-pause" id="pause">${this.PAUSE}</span>`;
+		const PAUSE = `<span class="control control-pause" id="pause">
+							<span id="fa-pause-icon" class="add">${this.PAUSE}</span>
+							<span id="fa-play-icon" class="add">${this.PLAY}</span>
+						</span>`;
 		const PREVIOUS = `<span class="control control-previous" id="previous">${this.PREVIOUS}</span>`;
 		const NEXT = `<span class="control control-next" id="next">${this.NEXT}</span>`;
 
@@ -56,6 +100,11 @@ class Carousel {
 		this.pauseButton = this.container.querySelector('#pause');
 		this.previousButton = this.container.querySelector('#previous');
 		this.nextButton = this.container.querySelector('#next');
+
+		this.pauseIcon = this.container.querySelector('#fa-pause-icon');
+		this.playIcon = this.container.querySelector('#fa-play-icon');
+
+		this.isPlaying ? this.pauseIcon.style.opacity = 1 : this.playIcon.style.opacity = 1;
 	}
 
 	_initIndicators() {
@@ -87,6 +136,8 @@ class Carousel {
 		this.nextButton.addEventListener('click', this.next.bind(this));
 		this.indContainer.addEventListener('click', this._indicate.bind(this));
 		document.addEventListener('keydown', this._pressKey.bind(this));
+		this.container.addEventListener('mouseenter', this._pause.bind(this));
+		this.container.addEventListener('mouseleave', this._play.bind(this));
 	}
 
 	_goToNth(n) {
@@ -107,16 +158,20 @@ class Carousel {
 
 	_pause() {
 		if (this.isPlaying) {
-			this.pauseButton.innerHTML = this.PLAY;
+			this.pauseIcon.style.opacity = 0;
+			this.playIcon.style.opacity = 1;
 			this.isPlaying = false;
 			clearInterval(this.timerID);
 		}
 	}
 
 	_play() {
-		this.pauseButton.innerHTML = this.PAUSE;
-		this.isPlaying = true;
-		this.timerID = setInterval(() => this._goToNext(), this.interval);
+		if (!this.isPlaying) {
+			this.pauseIcon.style.opacity = 1;
+			this.playIcon.style.opacity = 0;
+			this.isPlaying = true;
+			this.timerID = setInterval(() => this._goToNext(), this.interval);
+		}
 	}
 
 	pausePlay() {
@@ -153,7 +208,7 @@ class Carousel {
 		this._initControls();
 		this._initIndicators();
 		this._initListeners();
-		this.timerID = setInterval(() => this._goToNext(), this.interval);
+		if (this.isPlaying) this.timerID = setInterval(() => this._goToNext(), this.interval);
 	}
 }
 
