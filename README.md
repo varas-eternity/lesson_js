@@ -1,6 +1,6 @@
 ## lesson_js
 
-###Commit "slider_4" and "slider_5" contain Error:
+### Commit "slider_4" and "slider_5" contain Error:
 
 1. File main.js 
 
